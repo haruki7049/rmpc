@@ -2,6 +2,7 @@ use clap::Parser;
 use clap::Subcommand;
 use mpd::Client;
 use std::net::{IpAddr, Ipv4Addr};
+use std::path::PathBuf;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: CLIArgs = CLIArgs::parse();
@@ -20,6 +21,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Command::Toggle => rmpc::commands::toggle(&mut c)?,
         Command::Play => rmpc::commands::play(&mut c)?,
         Command::Listall => rmpc::commands::listall(&mut c)?,
+        Command::Add { filepath: s } => rmpc::commands::add(&mut c, s)?,
     }
 
     Ok(())
@@ -47,6 +49,9 @@ enum Command {
     Toggle,
     Play,
     Listall,
+    Add {
+        filepath: PathBuf,
+    }
 }
 
 impl std::fmt::Display for Command {
@@ -56,6 +61,7 @@ impl std::fmt::Display for Command {
             Command::Toggle => write!(f, "toggle"),
             Command::Play => write!(f, "play"),
             Command::Listall => write!(f, "listall"),
+            Command::Add { filepath: _ } => write!(f, "add"),
         }
     }
 }

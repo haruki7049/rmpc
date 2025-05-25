@@ -8,6 +8,7 @@ use crossterm::style::SetForegroundColor;
 use mpd::Client;
 use mpd::Song;
 use mpd::State;
+use std::path::PathBuf;
 
 pub fn status(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
     // Gets Stdout
@@ -181,6 +182,36 @@ pub fn listall(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
     for song in songs {
         println!("{}", song.file);
     }
+
+    Ok(())
+}
+
+pub fn add(c: &mut Client, path: PathBuf) -> Result<(), Box<dyn std::error::Error>> {
+    // TODO: Allow fullpath for the path argument to compare filename
+    // Example:
+    // [src/commands.rs:196:9] &name = "/home/haruki/Music/Ash Crow [FLAC]/01 - 灰よ.flac"
+    // [src/commands.rs:196:9] &song = Song {
+    //     file: "音楽産業廃棄物〜P-MODEL OR DIE [FLAC]/10 - DUSToidよ歩行は快適か？.flac",
+    //     name: None,
+    //     title: None,
+    //     last_mod: None,
+    //     artist: None,
+    //     duration: None,
+    //     place: None,
+    //     range: None,
+    //     tags: [],
+    // }
+
+    let songs: Vec<Song> = c.listall()?;
+    let name: &str = path.to_str().unwrap_or_default();
+
+    for song in songs {
+        dbg!(&name, &song);
+        if song.file == name {
+            c.push(song)?;
+        }
+    }
+
 
     Ok(())
 }
