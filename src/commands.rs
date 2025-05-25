@@ -168,3 +168,9 @@ pub fn toggle(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
     self::status(c)?;
     Ok(())
 }
+
+pub fn play(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+    c.play()?;
+    self::status(c)?;
+    Ok(())
+}

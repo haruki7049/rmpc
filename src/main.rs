@@ -20,6 +20,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     match command {
         Command::Status => commands::status(&mut c)?,
         Command::Toggle => commands::toggle(&mut c)?,
+        Command::Play => commands::play(&mut c)?,
     }
 
     Ok(())
@@ -45,6 +46,7 @@ enum Command {
     #[default]
     Status,
     Toggle,
+    Play,
 }
 
 impl std::fmt::Display for Command {
@@ -52,6 +54,7 @@ impl std::fmt::Display for Command {
         match self {
             Command::Status => write!(f, "status"),
             Command::Toggle => write!(f, "toggle"),
+            Command::Play => write!(f, "play"),
         }
     }
 }
