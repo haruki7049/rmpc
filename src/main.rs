@@ -51,7 +51,7 @@ enum Command {
     Listall,
     Add {
         filepath: PathBuf,
-    }
+    },
 }
 
 impl std::fmt::Display for Command {

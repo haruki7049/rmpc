@@ -212,6 +212,5 @@ pub fn add(c: &mut Client, path: PathBuf) -> Result<(), Box<dyn std::error::Erro
         }
     }
 
-
     Ok(())
 }
