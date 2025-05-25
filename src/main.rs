@@ -1,5 +1,5 @@
-use mpd::{Client, Query};
 use clap::Parser;
+use mpd::{Client, Query};
 use std::net::{IpAddr, Ipv4Addr};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
