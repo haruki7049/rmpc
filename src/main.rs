@@ -21,6 +21,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Command::Status => commands::status(&mut c)?,
         Command::Toggle => commands::toggle(&mut c)?,
         Command::Play => commands::play(&mut c)?,
+        Command::Listall => commands::listall(&mut c)?,
     }
 
     Ok(())
@@ -47,6 +48,7 @@ enum Command {
     Status,
     Toggle,
     Play,
+    Listall,
 }
 
 impl std::fmt::Display for Command {
@@ -55,6 +57,7 @@ impl std::fmt::Display for Command {
             Command::Status => write!(f, "status"),
             Command::Toggle => write!(f, "toggle"),
             Command::Play => write!(f, "play"),
+            Command::Listall => write!(f, "listall"),
         }
     }
 }

@@ -6,6 +6,7 @@ use crossterm::style::ResetColor;
 use crossterm::style::SetAttribute;
 use crossterm::style::SetForegroundColor;
 use mpd::Client;
+use mpd::Song;
 use mpd::State;
 
 pub fn status(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
@@ -172,5 +173,14 @@ pub fn toggle(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
 pub fn play(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
     c.play()?;
     self::status(c)?;
+    Ok(())
+}
+
+pub fn listall(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+    let songs: Vec<Song> = c.listall()?;
+    for song in songs {
+        println!("{}", song.file);
+    }
+
     Ok(())
 }
