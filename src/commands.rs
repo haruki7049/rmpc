@@ -5,8 +5,8 @@ use crossterm::style::Print;
 use crossterm::style::ResetColor;
 use crossterm::style::SetAttribute;
 use crossterm::style::SetForegroundColor;
-use mpd::State;
 use mpd::Client;
+use mpd::State;
 
 pub fn status(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
     // Gets Stdout
