@@ -20,7 +20,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         None => {
             status(&mut c)?;
             return Ok(());
-        },
+        }
     };
 
     match command {
