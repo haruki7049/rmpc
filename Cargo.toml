@@ -1,7 +1,8 @@
 [package]
 name = "rmpc"
 authors = ["haruki7049 <tontonkirikiri@gmail.com>"]
-version = "0.1.0"
+description = "Reimplementation of mpc in Rust-lang"
+version = "0.1.0-dev"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
