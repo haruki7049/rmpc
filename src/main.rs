@@ -1,5 +1,3 @@
-use rmpc::commands;
-
 use clap::Parser;
 use clap::Subcommand;
 use mpd::Client;
@@ -12,16 +10,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let command: Command = match args.command {
         Some(command) => command,
         None => {
-            commands::status(&mut c)?;
+            rmpc::commands::status(&mut c)?;
             return Ok(());
         }
     };
 
     match command {
-        Command::Status => commands::status(&mut c)?,
-        Command::Toggle => commands::toggle(&mut c)?,
-        Command::Play => commands::play(&mut c)?,
-        Command::Listall => commands::listall(&mut c)?,
+        Command::Status => rmpc::commands::status(&mut c)?,
+        Command::Toggle => rmpc::commands::toggle(&mut c)?,
+        Command::Play => rmpc::commands::play(&mut c)?,
+        Command::Listall => rmpc::commands::listall(&mut c)?,
     }
 
     Ok(())
