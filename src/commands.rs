@@ -162,3 +162,9 @@ pub fn status(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
     }
     Ok(())
 }
+
+pub fn toggle(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+    c.toggle_pause()?;
+    self::status(c)?;
+    Ok(())
+}

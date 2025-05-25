@@ -19,6 +19,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     match command {
         Command::Status => commands::status(&mut c)?,
+        Command::Toggle => commands::toggle(&mut c)?,
     }
 
     Ok(())
@@ -43,12 +44,14 @@ struct CLIArgs {
 enum Command {
     #[default]
     Status,
+    Toggle,
 }
 
 impl std::fmt::Display for Command {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Command::Status => write!(f, "status"),
+            Command::Toggle => write!(f, "toggle"),
         }
     }
 }
