@@ -22,6 +22,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Command::Play => rmpc::commands::play(&mut c)?,
         Command::Listall => rmpc::commands::listall(&mut c)?,
         Command::Add { filepath: s } => rmpc::commands::add(&mut c, s)?,
+        Command::Stats => rmpc::commands::stats(&mut c)?,
     }
 
     Ok(())
@@ -52,6 +53,7 @@ enum Command {
     Add {
         filepath: PathBuf,
     },
+    Stats,
 }
 
 impl std::fmt::Display for Command {
@@ -62,6 +64,7 @@ impl std::fmt::Display for Command {
             Command::Play => write!(f, "play"),
             Command::Listall => write!(f, "listall"),
             Command::Add { filepath: _ } => write!(f, "add"),
+            Command::Stats => write!(f, "stats"),
         }
     }
 }

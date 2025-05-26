@@ -214,3 +214,76 @@ pub fn add(c: &mut Client, path: PathBuf) -> Result<(), Box<dyn std::error::Erro
 
     Ok(())
 }
+
+pub fn stats(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+    let stats = c.stats()?;
+    let artists = stats.artists;
+    let albums = stats.albums;
+    let songs = stats.songs;
+    let playtime = time::Duration::try_from(stats.playtime)?;
+    let uptime = time::Duration::try_from(stats.uptime)?;
+    let db_update = time::Duration::try_from(stats.db_update)?;
+    let db_playtime = time::Duration::try_from(stats.db_playtime)?;
+
+    let mut stdout: std::io::Stdout = std::io::stdout();
+
+    stdout
+        .execute(SetForegroundColor(Color::White))?
+        .execute(SetAttribute(Attribute::Bold))?
+        .execute(Print("Artists: "))?
+        .execute(ResetColor)?;
+
+    stdout.execute(Print(artists))?.execute(Print("\n"))?;
+
+    stdout
+        .execute(SetForegroundColor(Color::White))?
+        .execute(SetAttribute(Attribute::Bold))?
+        .execute(Print("Albums: "))?
+        .execute(ResetColor)?;
+
+    stdout.execute(Print(albums))?.execute(Print("\n"))?;
+
+    stdout
+        .execute(SetForegroundColor(Color::White))?
+        .execute(SetAttribute(Attribute::Bold))?
+        .execute(Print("Songs: "))?
+        .execute(ResetColor)?;
+
+    stdout.execute(Print(songs))?.execute(Print("\n"))?;
+
+    stdout.execute(Print("\n"))?;
+
+    stdout
+        .execute(SetForegroundColor(Color::White))?
+        .execute(SetAttribute(Attribute::Bold))?
+        .execute(Print("Play Time: "))?
+        .execute(ResetColor)?;
+
+    stdout.execute(Print(playtime))?.execute(Print("\n"))?;
+
+    stdout
+        .execute(SetForegroundColor(Color::White))?
+        .execute(SetAttribute(Attribute::Bold))?
+        .execute(Print("Uptime: "))?
+        .execute(ResetColor)?;
+
+    stdout.execute(Print(uptime))?.execute(Print("\n"))?;
+
+    stdout
+        .execute(SetForegroundColor(Color::White))?
+        .execute(SetAttribute(Attribute::Bold))?
+        .execute(Print("DB Updated: "))?
+        .execute(ResetColor)?;
+
+    stdout.execute(Print(db_update))?.execute(Print("\n"))?;
+
+    stdout
+        .execute(SetForegroundColor(Color::White))?
+        .execute(SetAttribute(Attribute::Bold))?
+        .execute(Print("DB Play Time: "))?
+        .execute(ResetColor)?;
+
+    stdout.execute(Print(db_playtime))?.execute(Print("\n"))?;
+
+    Ok(())
+}

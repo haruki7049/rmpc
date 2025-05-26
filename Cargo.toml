@@ -14,3 +14,4 @@ repository = "https://github.com/haruki7049/rmpc"
 clap = { version = "4.5.38", features = ["derive"] }
 crossterm = "0.29.0"
 mpd = "0.1.0"
+time = "0.3.41"
