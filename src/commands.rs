@@ -287,3 +287,16 @@ pub fn stats(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+pub fn queue_list(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+    let queue_list: Vec<Song> = c.queue()?;
+    for song in queue_list {
+        println!("{}", song.file);
+    }
+
+    Ok(())
+}
+
+pub fn queued(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+    todo!()
+}

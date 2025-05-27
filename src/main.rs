@@ -23,6 +23,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Command::Listall => rmpc::commands::listall(&mut c)?,
         Command::Add { filepath: s } => rmpc::commands::add(&mut c, s)?,
         Command::Stats => rmpc::commands::stats(&mut c)?,
+        Command::QueueList => rmpc::commands::queue_list(&mut c)?,
+        Command::Queued => rmpc::commands::queued(&mut c)?,
     }
 
     Ok(())
@@ -54,6 +56,8 @@ enum Command {
         filepath: PathBuf,
     },
     Stats,
+    QueueList,
+    Queued,
 }
 
 impl std::fmt::Display for Command {
@@ -65,6 +69,8 @@ impl std::fmt::Display for Command {
             Command::Listall => write!(f, "listall"),
             Command::Add { filepath: _ } => write!(f, "add"),
             Command::Stats => write!(f, "stats"),
+            Command::QueueList => write!(f, "queue-list"),
+            Command::Queued => write!(f, "queued"),
         }
     }
 }
