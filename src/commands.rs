@@ -288,15 +288,20 @@ pub fn stats(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-pub fn queue_list(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
-    let queue_list: Vec<Song> = c.queue()?;
-    for song in queue_list {
-        println!("{}", song.file);
+pub mod queue {
+    use mpd::Client;
+    use mpd::Song;
+
+    pub fn queue_list(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+        let queue_list: Vec<Song> = c.queue()?;
+        for song in queue_list {
+            println!("{}", song.file);
+        }
+
+        Ok(())
     }
 
-    Ok(())
-}
-
-pub fn queued(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
-    todo!()
+    pub fn queued(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+        todo!()
+    }
 }

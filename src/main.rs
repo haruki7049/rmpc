@@ -23,8 +23,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Command::Listall => rmpc::commands::listall(&mut c)?,
         Command::Add { filepath: s } => rmpc::commands::add(&mut c, s)?,
         Command::Stats => rmpc::commands::stats(&mut c)?,
-        Command::QueueList => rmpc::commands::queue_list(&mut c)?,
-        Command::Queued => rmpc::commands::queued(&mut c)?,
+        Command::Queue(v) => match v {
+            QueueCommand::List => rmpc::commands::queue::queue_list(&mut c)?,
+            QueueCommand::NextTrack => rmpc::commands::queue::queued(&mut c)?,
+        },
     }
 
     Ok(())
@@ -56,21 +58,13 @@ enum Command {
         filepath: PathBuf,
     },
     Stats,
-    QueueList,
-    Queued,
+
+    #[clap(subcommand)]
+    Queue(QueueCommand),
 }
 
-impl std::fmt::Display for Command {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Command::Status => write!(f, "status"),
-            Command::Toggle => write!(f, "toggle"),
-            Command::Play => write!(f, "play"),
-            Command::Listall => write!(f, "listall"),
-            Command::Add { filepath: _ } => write!(f, "add"),
-            Command::Stats => write!(f, "stats"),
-            Command::QueueList => write!(f, "queue-list"),
-            Command::Queued => write!(f, "queued"),
-        }
-    }
+#[derive(Debug, Clone, Subcommand)]
+enum QueueCommand {
+    List,
+    NextTrack,
 }
