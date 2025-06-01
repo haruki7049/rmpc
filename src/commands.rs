@@ -291,17 +291,37 @@ pub fn stats(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
 pub mod queue {
     use mpd::Client;
     use mpd::Song;
+    use mpd::Status;
 
-    pub fn queue_list(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+    pub fn list(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+        let status: Status = c.status()?;
+        let now_position: u32 = status.song.ok_or("No playing song found")?.pos + 1; // The pos variable starts with zero
+
         let queue_list: Vec<Song> = c.queue()?;
+        let mut counter: u32 = 1;
         for song in queue_list {
-            println!("{}", song.file);
+            if counter == now_position {
+                println!("Now playing: {}", song.file);
+            } else {
+                println!("             {}", song.file);
+            }
+            counter += 1;
         }
 
         Ok(())
     }
 
-    pub fn queued(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
-        todo!()
+    pub fn next_track(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+        let status: Status = c.status()?;
+        let now_position: usize = status.song.ok_or("No playing song found")?.pos.try_into()?; // The pos variable starts with zero, but queue_list also starts with zero
+
+        let queue_list: Vec<Song> = c.queue()?;
+        let next_song: Option<&Song> = queue_list.get(now_position + 1);
+        match next_song {
+            Some(song) => println!("{}", song.file),
+            None => println!("No songs found"),
+        }
+
+        Ok(())
     }
 }

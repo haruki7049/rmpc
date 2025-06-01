@@ -24,8 +24,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Command::Add { filepath: s } => rmpc::commands::add(&mut c, s)?,
         Command::Stats => rmpc::commands::stats(&mut c)?,
         Command::Queue(v) => match v {
-            QueueCommand::List => rmpc::commands::queue::queue_list(&mut c)?,
-            QueueCommand::NextTrack => rmpc::commands::queue::queued(&mut c)?,
+            QueueCommand::List => rmpc::commands::queue::list(&mut c)?,
+            QueueCommand::NextTrack => rmpc::commands::queue::next_track(&mut c)?,
         },
     }
 
