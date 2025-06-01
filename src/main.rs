@@ -1,13 +1,22 @@
 use clap::Parser;
 use clap::Subcommand;
+use clap_complete::Shell;
 use mpd::Client;
 use std::net::{IpAddr, Ipv4Addr};
 use std::path::PathBuf;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: CLIArgs = CLIArgs::parse();
-    let mut c: Client = Client::connect((args.ip, args.port)).unwrap();
 
+    match args.shell_completion {
+        Some(shell) => {
+            self::completion::display(shell);
+            return Ok(());
+        }
+        None => (),
+    }
+
+    let mut c: Client = Client::connect((args.ip, args.port)).unwrap();
     let command: Command = match args.command {
         Some(command) => command,
         None => {
@@ -47,6 +56,9 @@ struct CLIArgs {
 
     #[clap(subcommand)]
     command: Option<Command>,
+
+    #[arg(long)]
+    shell_completion: Option<Shell>,
 }
 
 #[derive(Default, Debug, Clone, Subcommand)]
@@ -71,4 +83,19 @@ enum QueueCommand {
     List,
     NextTrack,
     Clear,
+}
+
+mod completion {
+    use clap_complete::{Generator, generate};
+    use clap::CommandFactory;
+    use super::CLIArgs;
+
+    pub fn display<G: Generator>(generator: G) {
+        generate(
+            generator,
+            &mut CLIArgs::command(),
+            env!("CARGO_PKG_NAME"),
+            &mut std::io::stdout(),
+        );
+    }
 }
