@@ -86,9 +86,9 @@ enum QueueCommand {
 }
 
 mod completion {
-    use clap_complete::{Generator, generate};
-    use clap::CommandFactory;
     use super::CLIArgs;
+    use clap::CommandFactory;
+    use clap_complete::{Generator, generate};
 
     pub fn display<G: Generator>(generator: G) {
         generate(
