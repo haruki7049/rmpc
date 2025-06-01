@@ -27,6 +27,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Command::Queue(v) => match v {
             QueueCommand::List => rmpc::commands::queue::list(&mut c)?,
             QueueCommand::NextTrack => rmpc::commands::queue::next_track(&mut c)?,
+            QueueCommand::Clear => rmpc::commands::queue::clear(&mut c)?,
         },
     }
 
@@ -69,4 +70,5 @@ enum Command {
 enum QueueCommand {
     List,
     NextTrack,
+    Clear,
 }

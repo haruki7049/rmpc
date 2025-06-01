@@ -330,4 +330,10 @@ pub mod queue {
 
         Ok(())
     }
+
+    pub fn clear(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+        c.clear()?;
+        crate::commands::status(c)?;
+        Ok(())
+    }
 }
