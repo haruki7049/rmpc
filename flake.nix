@@ -54,6 +54,22 @@
           };
           rmpc = craneLib.buildPackage {
             inherit src cargoArtifacts;
+            nativeBuildInputs = [
+              pkgs.installShellFiles
+            ];
+
+            installPhaseCommand = ''
+              echo "actually installing contents of $postBuildInstallFromCargoBuildLogOut to $out"
+              mkdir -p $out
+              find "$postBuildInstallFromCargoBuildLogOut" -mindepth 1 -maxdepth 1 | xargs -r mv -t $out
+
+              # Shell completion files
+              installShellCompletion --cmd rmpc \
+                --bash <($out/bin/rmpc --shell-completion bash) \
+                --fish <($out/bin/rmpc --shell-completion fish) \
+                --zsh <($out/bin/rmpc --shell-completion zsh)
+            '';
+
             strictDeps = true;
             doCheck = true;
 
