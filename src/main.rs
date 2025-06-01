@@ -23,6 +23,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Command::Listall => rmpc::commands::listall(&mut c)?,
         Command::Add { filepath: s } => rmpc::commands::add(&mut c, s)?,
         Command::Stats => rmpc::commands::stats(&mut c)?,
+        Command::Stop => rmpc::commands::stop(&mut c)?,
         Command::Queue(v) => match v {
             QueueCommand::List => rmpc::commands::queue::list(&mut c)?,
             QueueCommand::NextTrack => rmpc::commands::queue::next_track(&mut c)?,
@@ -58,6 +59,7 @@ enum Command {
         filepath: PathBuf,
     },
     Stats,
+    Stop,
 
     #[clap(subcommand)]
     Queue(QueueCommand),

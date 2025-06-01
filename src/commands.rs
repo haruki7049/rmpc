@@ -288,6 +288,12 @@ pub fn stats(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+pub fn stop(c: &mut Client) -> Result<(), Box<dyn std::error::Error>> {
+    c.stop()?;
+    self::status(c)?;
+    Ok(())
+}
+
 pub mod queue {
     use mpd::Client;
     use mpd::Song;
